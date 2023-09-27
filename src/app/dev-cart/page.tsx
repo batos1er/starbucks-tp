@@ -2,7 +2,7 @@
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
 import { Button, ProductCardLayout, SectionContainer } from "tp-kit/components";
 import { ProductCartLine } from "../../../tp-kit/components/products/product-cart-line";
-import { addLine, useCart } from "../../hooks/use-cart";
+import { addLine, computeCartTotal, removeLine, updateLine, useCart } from "../../hooks/use-cart";
 const products = PRODUCTS_CATEGORY_DATA[0].products.slice(0, 3);
 
 
@@ -16,7 +16,6 @@ export default function DevCartPage() {
     >
       {/* Produits */}
       <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 flex-1">
-      <pre>{JSON.stringify(lines, null, 2)}</pre>
         {products.map((product) => (
           <ProductCardLayout
             key={product.id}
@@ -30,11 +29,11 @@ export default function DevCartPage() {
       {/* Panier */}
       <section className="w-full lg:w-1/3 space-y-8">
         {lines.map((line) => (
-          <ProductCartLine key={line.product.id} product={line.product} qty={1} onQtyChange={console.log} />
+          <ProductCartLine key={line.product.id} product={line.product} qty={line.qty} onDelete={() => removeLine(line.product.id)} onQtyChange={(qty) => updateLine({...line, qty:qty})} />
         ))}
         <div className="flex justify-between">
         <h3 className="w-full">Total</h3>
-        <div>10€</div>
+        <div>{computeCartTotal(lines)}€</div>
         </div>
         <Button fullWidth type={"submit"}>Commander</Button>
 				

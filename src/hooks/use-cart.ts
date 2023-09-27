@@ -52,9 +52,7 @@ export function updateLine(line: ProductLineData) {
 export function removeLine(productId: number) {
   useCart.setState((state) =>{
     const lines = [...state.lines];
-    let ligneId = lines.findIndex((ligne) => ligne.product.id === productId)
-    delete(lines[ligneId]);
-    return {lines:lines}
+    return {lines:lines.filter(l => l.product.id !== productId)}
   })
 }
 
