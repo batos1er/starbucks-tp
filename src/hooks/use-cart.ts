@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { CartData, ProductLineData } from '../types'
 import { ProductData } from 'tp-kit/types'
 
-const useCart = create<CartData>((set) => ({
+export const useCart = create<CartData>((set) => ({
   lines: [],
 }))
 
@@ -24,6 +24,7 @@ export function addLine(product: ProductData) {
     else{
       lines[ligneproduitId].qty = lines[ligneproduitId].qty +1;
     }
+    console.log(lines)
     return {lines:lines}
   })
 }
